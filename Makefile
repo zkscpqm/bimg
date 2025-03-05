@@ -5,21 +5,19 @@
 
 UNAME := $(shell uname)
 ifeq ($(UNAME),$(filter $(UNAME),Linux Darwin FreeBSD GNU/kFreeBSD))
-ifeq ($(UNAME),$(filter $(UNAME),Darwin))
-OS=darwin
+	ifeq ($(UNAME),$(filter $(UNAME),Darwin))
+		OS=darwin
+	else
+	ifeq ($(UNAME),$(filter $(UNAME),FreeBSD GNU/kFreeBSD))
+		OS=bsd
+	else
+		OS=linux
+	endif
+	endif
 else
-ifeq ($(UNAME),$(filter $(UNAME),FreeBSD GNU/kFreeBSD))
-OS=bsd
-else
-OS=linux
-endif
-endif
-else
-export MINGW := C:/msys64/mingw64
-OS=windows
-
+	export MINGW := C:/msys64/mingw64
+	OS=windows
 help: projgen
-
 endif
 
 # $(info $(OS))
